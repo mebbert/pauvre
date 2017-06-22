@@ -31,7 +31,9 @@ def parse_fastq_length_meanqual(fastq):
     length = []
     meanQual = []
     with open(fastq,"r") as handle:
-        for record in SeqIO.parse(handle, "fastq"):
+        for i, record in enumerate(.parse(handle, "fastq")):
+            if i % 10000 == 0:
+                print("\rSeqs assessed: ", i, end="")
             if len(record) > 0 and np.mean(record.letter_annotations["phred_quality"]) > 0:
                 meanQual.append(np.mean(record.letter_annotations["phred_quality"]))
                 length.append(len(record))
